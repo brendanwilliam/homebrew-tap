@@ -9,7 +9,7 @@ cask "clive" do
   homepage "https://github.com/brendanwilliam/clive"
 
   depends_on arch: :arm64
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   pkg "clive.pkg"
 
