@@ -21,16 +21,16 @@ jobs:
         run: |
           brew tap brendanwilliam/tap "$GITHUB_WORKSPACE"
           brew trust brendanwilliam/tap
-          brew audit --cask --strict clive
+          brew audit --cask --strict --except=token_conflicts brendanwilliam/tap/clive
 
       - name: Install and verify cask
         run: |
           set -euo pipefail
-          brew install --cask clive
+          brew install --cask brendanwilliam/tap/clive
           test -x /usr/local/bin/clive
           /usr/local/bin/clive --help
           test -d /Applications/Clive.app
-          brew upgrade --cask clive
+          brew upgrade --cask brendanwilliam/tap/clive
 
       - name: Verify ordinary uninstall preserves pairing state
         run: |
@@ -38,12 +38,12 @@ jobs:
           state_path="$HOME/Library/Application Support/clive"
           mkdir -p "$state_path"
           touch "$state_path/pairing-state"
-          brew uninstall --cask clive
+          brew uninstall --cask brendanwilliam/tap/clive
           test -f "$state_path/pairing-state"
 
       - name: Verify zap removes pairing state
         run: |
           set -euo pipefail
-          brew install --cask clive
-          brew uninstall --cask --zap clive
+          brew install --cask brendanwilliam/tap/clive
+          brew uninstall --cask --zap brendanwilliam/tap/clive
           test ! -e "$HOME/Library/Application Support/clive"

@@ -2,8 +2,7 @@ cask "clive" do
   version "1.0.1"
   sha256 "3caf9b1fd5432533d4335a76df942d1d6368c453fde1f74f8ef7ccf039f07fd4"
 
-  url "https://github.com/brendanwilliam/clive/releases/download/v#{version}/clive.pkg",
-      verified: "github.com/brendanwilliam/clive/"
+  url "https://github.com/brendanwilliam/clive/releases/download/v#{version}/clive.pkg"
   name "Clive"
   desc "Securely access a Mac terminal from an iPhone"
   homepage "https://github.com/brendanwilliam/clive"
