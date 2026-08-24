@@ -1,0 +1,48 @@
+name: Verify casks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  clive:
+    name: Audit and install Clive
+    runs-on: macos-14
+    timeout-minutes: 20
+    steps:
+      - name: Check out tap
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Audit cask
+        run: |
+          brew tap brendanwilliam/tap "$GITHUB_WORKSPACE"
+          brew audit --cask --strict clive
+
+      - name: Install and verify cask
+        run: |
+          set -euo pipefail
+          brew install --cask clive
+          test -x /usr/local/bin/clive
+          /usr/local/bin/clive --help
+          test -d /Applications/Clive.app
+          brew upgrade --cask clive
+
+      - name: Verify ordinary uninstall preserves pairing state
+        run: |
+          set -euo pipefail
+          state_path="$HOME/Library/Application Support/clive"
+          mkdir -p "$state_path"
+          touch "$state_path/pairing-state"
+          brew uninstall --cask clive
+          test -f "$state_path/pairing-state"
+
+      - name: Verify zap removes pairing state
+        run: |
+          set -euo pipefail
+          brew install --cask clive
+          brew uninstall --cask --zap clive
+          test ! -e "$HOME/Library/Application Support/clive"
