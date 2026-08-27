@@ -1,6 +1,6 @@
 cask "clive" do
-  version "1.0.3"
-  sha256 "e63155a0fe476bc579daff1c4b66e3beaa1584245107b87b4a01757a226fcc7a"
+  version "1.1.0"
+  sha256 "4c5079f6e6f8c41d7281ee8b198cc13407e68c58db77dfa0c8f5ea964af13dab"
 
   url "https://github.com/brendanwilliam/clive/releases/download/v#{version}/clive.pkg"
   name "Clive"
